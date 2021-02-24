@@ -1,0 +1,77 @@
+{% extends 'main_app/base.html' %}
+{% load static thumbnail %}
+
+{% block title %}
+    {% if home_content.title %}
+        {{ home_content.title }}
+    {% else %}
+        Главная страница
+    {% endif %}
+{% endblock title %}
+
+{% block keywords %}
+    {% if home_content.keywords %}
+        {{ home_content.keywords }}
+    {% endif %}
+{% endblock keywords %}
+
+{% block description %}
+    {% if home_content.header_description %}
+        {{ home_content.header_description }}
+    {% endif %}
+{% endblock description %}
+
+{% block content %}
+    <h1>{{ home_content.header }}</h1>
+    {% if home_content.slider_images.count %}
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% for slide in home_content.slider_images.all %}
+                    <div class="swiper-slide">
+                        {% thumbnail slide.image "1240x835" crop="center" as im %}
+                            <img src="{{ im.url }}" alt="{{ im.name }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    {% else %}
+        <div>Слайды не загружены</div>
+    {% endif %}
+    <div class="intro-text">
+        {{ home_content.description|safe }}
+    </div>
+    <div class="products-list">
+        <h2>Продукты</h2>
+        <ul>
+            {% for product in product_list %}
+                <li><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></li>
+            {% empty %}
+                <li><small>На данный момент продукция отсутствует</small></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="map" data-latitude="{{ home_content.map_latitude }}"
+         data-longitude="{{ home_content.map_longitude }}"></div>
+    <h2>Отправить сообщение</h2>
+    <form id="form" method="post" action="{% url 'send_mail' %}">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field }}
+        {% endfor %}
+{#        <input type="text" placeholder="Ваше имя" class="text-box" id="name" onfocus="blurEvent(this)"#}
+{#               onkeyup="onChangeEvent(this)">#}
+{#        <input type="text" placeholder="Электронная почта" class="text-box" id="email" onfocus="blurEvent(this)"#}
+{#               onkeyup="onChangeEvent(this)">#}
+        <input type="submit" value="Отправить" class="button" onclick="event.preventDefault();onSubmitEvent()">
+    </form>
+{% endblock content %}
+{% block load_scripts %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=28ba27e6-8179-45dd-8a90-a542e1883e67"
+            type="text/javascript"></script>
+    <script src="{% static 'main_app/js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'main_app/js/main.js' %}"></script>
+{% endblock load_scripts %}
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="test-work codestudio" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="test-work codestudio">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/test-work_codestudio" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/media" />
+            <excludedPath local="true" path="$PROJECT_DIR$/db.sqlite3" />
+            <excludedPath local="true" path="$PROJECT_DIR$/test_work_codestudio/local_settings.py" />
+            <excludedPath local="true" path="$PROJECT_DIR$/main_app/migrations" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

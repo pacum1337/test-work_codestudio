@@ -1,0 +1,59 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    {% if product.title %}
+        {{ product.title }}
+    {% else %}
+        {{ product.name }}
+    {% endif %}
+{% endblock title %}
+
+{% block keywords %}
+    {% if product.keywords %}
+        {{ product.keywords }}
+    {% endif %}
+{% endblock keywords %}
+
+{% block description %}
+    {% if product.header_description %}
+        {{ product.header_description }}
+    {% endif %}
+{% endblock description %}
+
+{% block content %}
+    <a href="{% url 'home' %}" class="go-back">На главную</a>
+    <h1>{{ product.name }}</h1>
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+    <div class="product-info">
+        <div class="product-info-item">
+            <h2>{{ product.product_info_1 }}</h2>
+            <ul>
+                {% for item in product.product_info_items_1.all %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if product.product_info_2 and product.product_info_items_2.count > 0 %}
+            <div class="product-info-item">
+                <h2>{{ product.product_info_2 }}</h2>
+                <ul>
+                    {% for item in product.product_info_items_2.all %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if product.product_info_3 and product.product_info_items_3.count > 0 %}
+            <div class="product-info-item">
+                <h2>{{ product.product_info_3 }}</h2>
+                <ul>
+                    {% for item in product.product_info_items_3.all %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
